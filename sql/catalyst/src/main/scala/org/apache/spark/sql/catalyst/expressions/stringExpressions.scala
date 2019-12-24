@@ -1223,6 +1223,14 @@ case class StringLPad(str: Expression, len: Expression, pad: Expression = Litera
     this(str, len, Literal(" "))
   }
 
+  override def nullable: Boolean = if (pad != null) {
+    pad.dataType match {
+      case s: StringType if pad.toString.isEmpty => true
+      case _ => super.nullable
+    }
+  }
+  else super.nullable
+
   override def children: Seq[Expression] = str :: len :: pad :: Nil
   override def dataType: DataType = StringType
   override def inputTypes: Seq[DataType] = Seq(StringType, IntegerType, StringType)

@@ -911,7 +911,7 @@ public final class UTF8String implements Comparable<UTF8String>, Externalizable,
   public UTF8String lpad(int len, UTF8String pad) {
     int spaces = len - this.numChars(); // number of char need to pad
     if (len > 0 && pad.numBytes() == 0) {
-      // no padding at all, return the null
+      // if require string length > 0 and no padding at all, return the null
       return null;
     } else if (spaces <= 0) {
       // no padding at all, return the substring of the current string
